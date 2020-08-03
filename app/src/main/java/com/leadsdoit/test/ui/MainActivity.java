@@ -1,26 +1,32 @@
 package com.leadsdoit.test.ui;
 
+import android.view.View;
+import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.leadsdoit.test.R;
+import com.leadsdoit.test.fragment.SlotFragment;
 import com.leadsdoit.test.fragment.WebviewFragment;
 
 public class MainActivity extends AppCompatActivity {
-
     Fragment webviewFragment;
+    SlotFragment slotFragment;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        webviewFragment = WebviewFragment.newInstance();
+        progressBar = findViewById(R.id.main_progress_bar);
+        slotFragment = SlotFragment.newInstance();
+        webviewFragment = WebviewFragment.newInstance(() -> setFragment(slotFragment));
         setFragment(webviewFragment);
     }
 
     private void setFragment(Fragment fragment) {
+        progressBar.setVisibility(View.INVISIBLE);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_container, fragment);
         fragmentTransaction.commit();
