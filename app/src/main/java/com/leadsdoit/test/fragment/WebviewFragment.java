@@ -1,6 +1,9 @@
 package com.leadsdoit.test.fragment;
 
 import android.os.Bundle;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +21,7 @@ public class WebviewFragment extends Fragment {
     public WebviewFragment() {
     }
 
-    public static WebviewFragment newInstance(String param1, String param2) {
+    public static WebviewFragment newInstance() {
         WebviewFragment fragment = new WebviewFragment();
         return fragment;
     }
@@ -33,6 +36,18 @@ public class WebviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_webview, container, false);
+        View view = inflater.inflate(R.layout.fragment_webview, container, false);
+        WebView webView = view.findViewById(R.id.webview);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                //TODO it return actual url of page wich was downloaded
+                Toast.makeText(WebviewFragment.this.getContext(), url, Toast.LENGTH_LONG).show();
+            }
+        });
+        webView.loadUrl("https://uk.wikipedia.org/wiki");
+        return view;
     }
 }
