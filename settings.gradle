@@ -1,0 +1,2 @@
+rootProject.name='Slot Game'
+include ':app'
