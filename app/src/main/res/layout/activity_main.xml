@@ -4,8 +4,25 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/background"
         tools:context=".ui.MainActivity">
+
+    <TextView
+            android:layout_marginTop="30dp"
+            android:textSize="20sp"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Balance"/>
+
+    <TextView
+            android:textSize="20sp"
+            android:layout_marginTop="60dp"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="25"/>
 
     <FrameLayout
             android:layout_width="match_parent"

@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         progressBar = findViewById(R.id.main_progress_bar);
-        slotFragment = SlotFragment.newInstance();
+        slotFragment = new SlotFragment();
         webviewFragment = WebviewFragment.newInstance(() -> setFragment(slotFragment));
         setFragment(webviewFragment);
     }

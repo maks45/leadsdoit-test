@@ -11,13 +11,8 @@ import android.view.ViewGroup;
 
 import com.leadsdoit.test.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link WebviewFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class WebviewFragment extends Fragment {
-    private static final String BASE_URL = "https://www.google.com/";
+    private static final String BASE_URL = "https://www.google.com";
     private OnLoadFailed onLoadFailed;
 
     public WebviewFragment() {
