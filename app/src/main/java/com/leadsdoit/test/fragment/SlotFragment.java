@@ -17,17 +17,17 @@ import android.view.ViewGroup;
 import com.leadsdoit.test.R;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class SlotFragment extends Fragment {
     private final int[] result = {2, 1, 1};
     private final int[] images;
     private final List<View> wheels;
-    private ImageButton spinButton;
+    private final boolean[] isRotating;
     private TextView balanceTextView;
     List<Integer> imagesForWheels;
     private long balance = 250;
-    private boolean[] isRotating;
 
     public SlotFragment() {
         wheels = new ArrayList<>();
@@ -84,7 +84,7 @@ public class SlotFragment extends Fragment {
             bottomImage = 0;
         }
         ((ImageView) wheels.get(wheelNumber).findViewById(R.id.image_1))
-                .setImageDrawable(ContextCompat.getDrawable(getContext(), imagesForWheels.get(bottomImage)));
+                .setImageDrawable(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), imagesForWheels.get(bottomImage)));
         ((ImageView) wheels.get(wheelNumber).findViewById(R.id.image_2))
                 .setImageDrawable(ContextCompat.getDrawable(getContext(), imagesForWheels.get(centerImage)));
         ((ImageView) wheels.get(wheelNumber).findViewById(R.id.image_3))
@@ -92,7 +92,7 @@ public class SlotFragment extends Fragment {
     }
 
     private void initButton(View rootView) {
-        spinButton = rootView.findViewById(R.id.spin_button);
+        ImageButton spinButton = rootView.findViewById(R.id.spin_button);
         spinButton.setOnClickListener(v -> {
             spinWheels();
         });

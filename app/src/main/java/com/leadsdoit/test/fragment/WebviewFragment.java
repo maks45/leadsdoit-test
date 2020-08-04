@@ -12,7 +12,8 @@ import android.view.ViewGroup;
 import com.leadsdoit.test.R;
 
 public class WebviewFragment extends Fragment {
-    private static final String BASE_URL = "https://www.google.com";
+    private static final String BASE_URL = "https://www.wikipedia.com/";
+    private static final String WHITE_URL = "https://www.google.com/";
     private OnLoadFailed onLoadFailed;
 
     public WebviewFragment() {
@@ -42,14 +43,11 @@ public class WebviewFragment extends Fragment {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                if (!url.equals(BASE_URL)) {
-                    //Toast.makeText(WebviewFragment.this.getContext(), url, Toast.LENGTH_LONG).show();
+                if (url.equals(WHITE_URL)) {
                     onLoadFailed.onFailed();
                 } else {
                     webView.setVisibility(View.VISIBLE);
                 }
-                //TODO it return actual url of page wich was downloaded
-               // Toast.makeText(WebviewFragment.this.getContext(), url, Toast.LENGTH_LONG).show();
             }
         });
         webView.loadUrl(BASE_URL);
