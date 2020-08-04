@@ -1,10 +1,14 @@
 package com.leadsdoit.test.fragment;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,16 +20,32 @@ import java.util.List;
 import java.util.Random;
 
 public class SlotFragment extends Fragment {
-    private final int[] result = {2, 5, 4};
+    private final int[] result = {2, 1, 1};
     private final int[] images;
     private final List<View> wheels;
-    private Button spinButton;
+    private ImageButton spinButton;
+    private TextView balanceTextView;
+    List<Integer> imagesForWheels;
+    private long balance = 250;
+    private boolean[] isRotating;
 
     public SlotFragment() {
         wheels = new ArrayList<>();
-        images = new int[]{R.drawable.sevent_done, R.drawable.orange_done, R.drawable.triple_done,
-                R.drawable.waternelon_done, R.drawable.cherry_done, R.drawable.bar_done,
-                R.drawable.lemon_done};
+        imagesForWheels = new ArrayList<>();
+        images = new int[]{
+                R.drawable.sevent_done,
+                R.drawable.orange_done,
+                R.drawable.triple_done,
+                R.drawable.waternelon_done,
+                R.drawable.cherry_done,
+                R.drawable.bar_done,
+                R.drawable.lemon_done
+        };
+        isRotating = new boolean[]{false, false, false};
+        imagesForWheels.add(images[0]);
+        imagesForWheels.add(images[2]);
+        imagesForWheels.add(images[1]);
+
     }
 
     @Override
@@ -42,6 +62,8 @@ public class SlotFragment extends Fragment {
         setImagesToWheels(0);
         setImagesToWheels(1);
         setImagesToWheels(2);
+        balanceTextView = view.findViewById(R.id.slot_balance);
+        setBalance();
         return view;
     }
 
@@ -55,18 +77,18 @@ public class SlotFragment extends Fragment {
         int centerImage = result[wheelNumber];
         int topImage = centerImage - 1;
         if (topImage == -1) {
-            topImage = images.length - 1;
+            topImage = imagesForWheels.size() - 1;
         }
         int bottomImage = centerImage + 1;
-        if (bottomImage == images.length) {
+        if (bottomImage == imagesForWheels.size()) {
             bottomImage = 0;
         }
         ((ImageView) wheels.get(wheelNumber).findViewById(R.id.image_1))
-                .setImageDrawable(ContextCompat.getDrawable(getContext(), images[bottomImage]));
+                .setImageDrawable(ContextCompat.getDrawable(getContext(), imagesForWheels.get(bottomImage)));
         ((ImageView) wheels.get(wheelNumber).findViewById(R.id.image_2))
-                .setImageDrawable(ContextCompat.getDrawable(getContext(), images[centerImage]));
+                .setImageDrawable(ContextCompat.getDrawable(getContext(), imagesForWheels.get(centerImage)));
         ((ImageView) wheels.get(wheelNumber).findViewById(R.id.image_3))
-                .setImageDrawable(ContextCompat.getDrawable(getContext(), images[topImage]));
+                .setImageDrawable(ContextCompat.getDrawable(getContext(), imagesForWheels.get(topImage)));
     }
 
     private void initButton(View rootView) {
@@ -77,6 +99,8 @@ public class SlotFragment extends Fragment {
     }
 
     private void spinWheels() {
+        balance = balance - 10;
+        setBalance();
         moveWheelDown(0, new Random().nextInt(50));
         moveWheelDown(1, new Random().nextInt(40));
         moveWheelDown(2, new Random().nextInt(30));
@@ -84,6 +108,7 @@ public class SlotFragment extends Fragment {
 
     private void moveWheelDown(int wheelNumber, int spinCount) {
         float stepHeight = wheels.get(wheelNumber).findViewById(R.id.image_1).getHeight();
+        isRotating[wheelNumber] = true;
         setImagesToWheels(wheelNumber);
         TranslateAnimation startAnimation =
                 new TranslateAnimation(0
@@ -110,7 +135,7 @@ public class SlotFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                if (result[wheelNumber] == images.length - 1) {
+                if (result[wheelNumber] == imagesForWheels.size() - 1) {
                     result[wheelNumber] = 0;
                 } else {
                     result[wheelNumber] = result[wheelNumber] + 1;
@@ -133,8 +158,11 @@ public class SlotFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                if(spinCount > 0) {
+                if (spinCount > 0) {
                     moveWheelDown(wheelNumber, spinCount - 1);
+                } else {
+                    isRotating[wheelNumber] = false;
+                    checkResult();
                 }
             }
 
@@ -144,5 +172,25 @@ public class SlotFragment extends Fragment {
             }
         });
         wheels.get(wheelNumber).startAnimation(startAnimation);
+    }
+
+    private void setBalance() {
+        balanceTextView.setText(String.valueOf(balance));
+    }
+
+    private void checkResult() {
+        if (!isRotating[0] && !isRotating[1] && !isRotating[2]
+                && imagesForWheels.get(result[0]).equals(imagesForWheels.get(result[1]))
+                && imagesForWheels.get(result[1]).equals(imagesForWheels.get(result[2]))) {
+            View popupWin = LayoutInflater.from(getContext()).inflate(R.layout.popup_win, null);
+            int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+            int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            boolean focusable = true;
+            final PopupWindow popupWindow = new PopupWindow(popupWin, width, height, focusable);
+            popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
+            balance = balance + 50;
+            setBalance();
+            imagesForWheels.add(images[new Random().nextInt(images.length - 1)]);
+        }
     }
 }

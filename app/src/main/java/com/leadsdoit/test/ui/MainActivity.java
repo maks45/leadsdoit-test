@@ -1,7 +1,7 @@
 package com.leadsdoit.test.ui;
 
 import android.view.View;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -13,7 +13,7 @@ import com.leadsdoit.test.fragment.WebviewFragment;
 public class MainActivity extends AppCompatActivity {
     Fragment webviewFragment;
     SlotFragment slotFragment;
-    ProgressBar progressBar;
+    LinearLayout progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

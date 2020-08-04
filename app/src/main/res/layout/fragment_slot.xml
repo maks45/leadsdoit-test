@@ -5,37 +5,100 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".fragment.SlotFragment">
-    <RelativeLayout
-            android:layout_width="306dp"
-            android:layout_height="206dp"
-            android:layout_centerInParent="true"
-            android:background="#FDC10C">
     <LinearLayout
-            android:orientation="horizontal"
-            android:layout_centerInParent="true"
-            android:layout_width="300dp"
-            android:layout_height="200dp">
-        <include
-                android:id="@+id/wheel_1"
-                layout="@layout/wheel_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical"
+            android:layout_margin="15dp"
+            android:padding="15dp"
+            android:background="#FDC10C"
+    >
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="your balance"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:fontFamily="@font/smooth_font_01"
+                android:textSize="28sp"
+                android:layout_centerInParent="true"
+                android:shadowColor="#673AB7"
+                android:shadowDx="1.5"
+                android:shadowDy="1.8"
+                android:shadowRadius="1.8"
         />
-        <include
-                android:id="@+id/wheel_2"
-                layout="@layout/wheel_view"
-        />
-        <include
-                android:id="@+id/wheel_3"
-                layout="@layout/wheel_view"
+        <View android:layout_width="match_parent"
+              android:layout_height="5dp"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="28sp"
+                android:text="23466"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:fontFamily="@font/smooth_font_01"
+                android:layout_centerInParent="true"
+                android:id="@+id/slot_balance"
+                android:shadowColor="#673AB7"
+                android:shadowDx="1.5"
+                android:shadowDy="1.8"
+                android:shadowRadius="1.8"
         />
     </LinearLayout>
+
+    <RelativeLayout
+            android:layout_width="310dp"
+            android:layout_height="210dp"
+            android:layout_centerInParent="true"
+            android:background="#FDC10C"
+    >
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_centerInParent="true"
+                android:layout_width="300dp"
+                android:layout_height="200dp">
+            <include
+                    android:id="@+id/wheel_1"
+                    layout="@layout/wheel_view"
+            />
+            <include
+                    android:id="@+id/wheel_3"
+                    layout="@layout/wheel_view"
+            />
+            <include
+                    android:id="@+id/wheel_2"
+                    layout="@layout/wheel_view"
+            />
+        </LinearLayout>
+
     </RelativeLayout>
-    <Button
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:text="SPIN"
-            android:id="@+id/spin_button"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_margin="10dp"
-    />
+    >
+        <ImageButton
+                android:src="@drawable/big_red_button"
+                android:scaleType="fitCenter"
+                android:id="@+id/spin_button"
+                android:layout_height="100dp"
+                android:layout_width="100dp"
+                android:layout_margin="10dp"
+                android:layout_centerInParent="true"
+                android:background="#00FFFFFF"
+        />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="spin"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:fontFamily="@font/smooth_font_01"
+                android:layout_centerInParent="true"
+                android:textSize="20sp"
+                android:gravity="center"/>
+    </RelativeLayout>
 </RelativeLayout>
