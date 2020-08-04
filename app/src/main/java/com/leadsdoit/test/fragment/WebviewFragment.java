@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import com.leadsdoit.test.R;
 
 public class WebviewFragment extends Fragment {
-    private static final String BASE_URL = "https://www.wikipedia.com/";
-    private static final String WHITE_URL = "https://www.google.com/";
     private OnLoadFailed onLoadFailed;
 
     public WebviewFragment() {
@@ -43,14 +41,14 @@ public class WebviewFragment extends Fragment {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                if (url.equals(WHITE_URL)) {
+                if (url.equals(getResources().getString(R.string.white_url))) {
                     onLoadFailed.onFailed();
                 } else {
                     webView.setVisibility(View.VISIBLE);
                 }
             }
         });
-        webView.loadUrl(BASE_URL);
+        webView.loadUrl(getResources().getString(R.string.base_url));
         return view;
     }
 
