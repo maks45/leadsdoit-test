@@ -1,4 +1,4 @@
-package com.leadsdoit.test.ui;
+package com.leadsdoit.test;
 
 import android.view.View;
 import android.widget.LinearLayout;
@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import com.leadsdoit.test.R;
 import com.leadsdoit.test.fragment.SlotFragment;
 import com.leadsdoit.test.fragment.WebviewFragment;
 
