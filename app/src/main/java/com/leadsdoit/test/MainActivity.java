@@ -1,21 +1,23 @@
 package com.leadsdoit.test;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import com.facebook.applinks.AppLinkData;
 import com.leadsdoit.test.fragment.SlotFragment;
 import com.leadsdoit.test.fragment.WebviewFragment;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
 public class MainActivity extends AppCompatActivity {
-    Fragment webviewFragment;
-    SlotFragment slotFragment;
-    LinearLayout progressBar;
-    AppEventsLogger logger;
+    private Fragment webviewFragment;
+    private SlotFragment slotFragment;
+    private LinearLayout progressBar;
+    private AppEventsLogger logger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         progressBar = findViewById(R.id.main_progress_bar);
         slotFragment = new SlotFragment();
-        webviewFragment = WebviewFragment.newInstance(() -> setFragment(slotFragment));
+        FacebookSdk.setAutoInitEnabled(true);
+        FacebookSdk.fullyInitialize();
+        webviewFragment = new WebviewFragment(() -> setFragment(slotFragment),
+                AppLinkData.createFromAlApplinkData(getIntent()));
+        setFragment(webviewFragment);
         setFragment(webviewFragment);
     }
 
@@ -33,9 +39,5 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_container, fragment);
         fragmentTransaction.commit();
-    }
-
-    public void logSentFriendRequestEvent () {
-        logger.logEvent("sentFriendRequest");
     }
 }

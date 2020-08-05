@@ -2,5 +2,6 @@
     <string name="app_name">Slot Game</string>
     <string name="facebook_app_id">667821150747045</string>
     <string name="base_url">https://www.google.com/</string>
-    <string name="white_url">https://www.google.com/</string>
+    <string name="white_url">https://www.google.cm/</string>
+    <string name="yandex_id">2394d906-1362-4130-bce4-c4d6e29a58f6</string>
 </resources>

@@ -67,9 +67,12 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     //facebook sdk
     implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
+    implementation 'com.facebook.android:facebook-applinks:5.15.3'
     //recyclerview
     implementation "androidx.recyclerview:recyclerview:$recycler_view_version"
     implementation "androidx.recyclerview:recyclerview-selection:$recycler_view_version_selection"
-
-    implementation 'com.onesignal:OneSignal:[3.15.0, 3.99.99]'
+    //onesignal
+    implementation 'com.onesignal:OneSignal:3.15.2'
+    //yandex metrica
+    implementation 'com.yandex.android:mobmetricalib:3.15.0'
 }
