@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "258843336953",
+    "firebase_url": "https://leadsdoit-test.firebaseio.com",
+    "project_id": "leadsdoit-test",
+    "storage_bucket": "leadsdoit-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:258843336953:android:f6217e47f43a9d6b0a8228",
+        "android_client_info": {
+          "package_name": "com.leadsdoit.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "258843336953-1ljibim0jq9epjrs7jgnolsr0fav89fm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoc1Lk2cgXsZcolkC8uAluqxLPGQz0Jsc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "258843336953-1ljibim0jq9epjrs7jgnolsr0fav89fm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

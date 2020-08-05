@@ -1,5 +1,6 @@
 package com.leadsdoit.test.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.animation.Animation;
@@ -9,15 +10,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import java.lang.ref.WeakReference;
 import com.leadsdoit.test.R;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 public class SlotFragment extends Fragment {
@@ -25,9 +27,11 @@ public class SlotFragment extends Fragment {
     private final int[] images;
     private final List<View> wheels;
     private final boolean[] isRotating;
+    private final List<Integer> imagesForWheels;
+    private PopupWindow popupWindow;
     private TextView balanceTextView;
-    List<Integer> imagesForWheels;
     private long balance = 250;
+    private WeakReference<Context> context;
 
     public SlotFragment() {
         wheels = new ArrayList<>();
@@ -45,7 +49,12 @@ public class SlotFragment extends Fragment {
         imagesForWheels.add(images[0]);
         imagesForWheels.add(images[2]);
         imagesForWheels.add(images[1]);
+    }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = new WeakReference<>(context);
     }
 
     @Override
@@ -56,6 +65,11 @@ public class SlotFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        popupWindow = new PopupWindow(
+                LayoutInflater.from(context.get()).inflate(R.layout.popup_win, null),
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                true);
         View view = inflater.inflate(R.layout.fragment_slot, container, false);
         initButton(view);
         initWheels(view);
@@ -84,26 +98,22 @@ public class SlotFragment extends Fragment {
             bottomImage = 0;
         }
         ((ImageView) wheels.get(wheelNumber).findViewById(R.id.image_1))
-                .setImageDrawable(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), imagesForWheels.get(bottomImage)));
+                .setImageDrawable(ContextCompat.getDrawable(context.get(), imagesForWheels.get(bottomImage)));
         ((ImageView) wheels.get(wheelNumber).findViewById(R.id.image_2))
-                .setImageDrawable(ContextCompat.getDrawable(getContext(), imagesForWheels.get(centerImage)));
+                .setImageDrawable(ContextCompat.getDrawable(context.get(), imagesForWheels.get(centerImage)));
         ((ImageView) wheels.get(wheelNumber).findViewById(R.id.image_3))
-                .setImageDrawable(ContextCompat.getDrawable(getContext(), imagesForWheels.get(topImage)));
+                .setImageDrawable(ContextCompat.getDrawable(context.get(), imagesForWheels.get(topImage)));
     }
 
     private void initButton(View rootView) {
         ImageButton spinButton = rootView.findViewById(R.id.spin_button);
         spinButton.setOnClickListener(v -> {
-            spinWheels();
+            balance = balance - 10;
+            setBalance();
+            moveWheelDown(0, new Random().nextInt(50));
+            moveWheelDown(1, new Random().nextInt(40));
+            moveWheelDown(2, new Random().nextInt(30));
         });
-    }
-
-    private void spinWheels() {
-        balance = balance - 10;
-        setBalance();
-        moveWheelDown(0, new Random().nextInt(50));
-        moveWheelDown(1, new Random().nextInt(40));
-        moveWheelDown(2, new Random().nextInt(30));
     }
 
     private void moveWheelDown(int wheelNumber, int spinCount) {
@@ -115,14 +125,13 @@ public class SlotFragment extends Fragment {
                         , 0
                         , 0
                         , stepHeight / 2f
-
                 );
         startAnimation.setDuration(50 - spinCount);
         startAnimation.setFillAfter(true);
         TranslateAnimation endAnimation =
                 new TranslateAnimation(0
                         , 0
-                        , -stepHeight / 2f
+                        , - stepHeight / 2f
                         , 0
                 );
         endAnimation.setDuration(50 - spinCount);
@@ -182,15 +191,14 @@ public class SlotFragment extends Fragment {
         if (!isRotating[0] && !isRotating[1] && !isRotating[2]
                 && imagesForWheels.get(result[0]).equals(imagesForWheels.get(result[1]))
                 && imagesForWheels.get(result[1]).equals(imagesForWheels.get(result[2]))) {
-            View popupWin = LayoutInflater.from(getContext()).inflate(R.layout.popup_win, null);
-            int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-            int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-            boolean focusable = true;
-            final PopupWindow popupWindow = new PopupWindow(popupWin, width, height, focusable);
-            popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
+            showWinDialog();
             balance = balance + 50;
             setBalance();
             imagesForWheels.add(images[new Random().nextInt(images.length - 1)]);
         }
+    }
+
+    private void showWinDialog() {
+        popupWindow.showAtLocation(getView(), Gravity.CENTER, 0, 0);
     }
 }
