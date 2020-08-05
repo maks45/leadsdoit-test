@@ -54,6 +54,12 @@
             android:layout_centerInParent="true"
             android:background="#FDC10C"
     >
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#6AC66E"
+                android:layout_centerInParent="true"
+                />
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_centerInParent="true"

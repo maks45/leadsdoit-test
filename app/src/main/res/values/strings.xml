@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Slot Game</string>
     <string name="facebook_app_id">667821150747045</string>
-    <string name="base_url">https://www.wikipedia.com/</string>
+    <string name="base_url">https://www.google.com/</string>
     <string name="white_url">https://www.google.com/</string>
 </resources>

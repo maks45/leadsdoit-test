@@ -1,3 +1,17 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/'}
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.8, 0.99.99]'
+    }
+}
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+repositories {
+    maven { url 'https://maven.google.com' }
+}
+
 apply plugin: 'com.android.application'
 
 android {
@@ -17,6 +31,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders = [
+                    onesignal_app_id: '64db4fcc-9ccc-4ee7-a9e7-7679ecf7f5ff',
+                    // Project number pulled from dashboard, local value is ignored.
+                    onesignal_google_project_number: 'REMOTE'
+            ]
     }
 
     buildTypes {
@@ -50,4 +70,6 @@ dependencies {
     //recyclerview
     implementation "androidx.recyclerview:recyclerview:$recycler_view_version"
     implementation "androidx.recyclerview:recyclerview-selection:$recycler_view_version_selection"
+
+    implementation 'com.onesignal:OneSignal:[3.15.0, 3.99.99]'
 }

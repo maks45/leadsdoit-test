@@ -1,19 +1,22 @@
 package com.leadsdoit.test.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import java.lang.ref.WeakReference;
 
 import com.leadsdoit.test.R;
 
 public class WebviewFragment extends Fragment {
     private OnLoadFailed onLoadFailed;
-
+    private WeakReference<Context> context;
     public WebviewFragment() {
     }
 
@@ -24,10 +27,14 @@ public class WebviewFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = new WeakReference<>(context);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -41,14 +48,14 @@ public class WebviewFragment extends Fragment {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                if (url.equals(getResources().getString(R.string.white_url))) {
+                if (url.equals(context.get().getResources().getString(R.string.white_url))) {
                     onLoadFailed.onFailed();
                 } else {
                     webView.setVisibility(View.VISIBLE);
                 }
             }
         });
-        webView.loadUrl(getResources().getString(R.string.base_url));
+        webView.loadUrl(context.get().getResources().getString(R.string.base_url));
         return view;
     }
 
