@@ -3,24 +3,17 @@ package com.leadsdoit.test.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import java.lang.ref.WeakReference;
-import org.json.JSONException;
-
 import com.facebook.applinks.AppLinkData;
 import com.leadsdoit.test.R;
-import java.util.HashMap;
-import java.util.Map;
 
 public class WebviewFragment extends Fragment {
     private static final String TAG = "com.leadsdoit.test.fragment";

@@ -1,6 +1,5 @@
 package com.leadsdoit.test;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
